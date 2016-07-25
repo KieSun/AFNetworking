@@ -78,6 +78,7 @@
 
     self.baseURL = url;
 
+    // 序列化
     self.requestSerializer = [AFHTTPRequestSerializer serializer];
     self.responseSerializer = [AFJSONResponseSerializer serializer];
 
@@ -87,10 +88,13 @@
 #pragma mark -
 
 - (void)setRequestSerializer:(AFHTTPRequestSerializer <AFURLRequestSerialization> *)requestSerializer {
+    // NSParameterAssert 只需要一个参数,如果参数存在程序继续运行,如果参数为空,则程序停止打印日志
     NSParameterAssert(requestSerializer);
 
     _requestSerializer = requestSerializer;
 }
+
+
 
 - (void)setResponseSerializer:(AFHTTPResponseSerializer <AFURLResponseSerialization> *)responseSerializer {
     NSParameterAssert(responseSerializer);
@@ -116,6 +120,7 @@
                       failure:(void (^)(NSURLSessionDataTask * _Nullable, NSError * _Nonnull))failure
 {
 
+    // NSURLSession 不会立即执行,而是返回 task,然后让开发者配置,最后通过 resume 开始 task
     NSURLSessionDataTask *dataTask = [self dataTaskWithHTTPMethod:@"GET"
                                                         URLString:URLString
                                                        parameters:parameters
